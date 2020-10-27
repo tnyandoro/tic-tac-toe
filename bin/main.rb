@@ -32,6 +32,16 @@ class Main
     end
   end
 
+  def display_board
+    puts
+    puts " #{@board[0][0]} | #{@board[0][1]} | #{@board[0][2]}"
+    puts '---|---|---'
+    puts " #{@board[1][0]} | #{@board[1][1]} | #{@board[1][2]}"
+    puts '---|---|---'
+    puts " #{@board[2][0]} | #{@board[2][1]} | #{@board[2][2]}"
+    puts
+  end
+
   def start
     # Get User Information
     user_information

@@ -60,6 +60,35 @@ class Main
     puts '********************************************************'
   end
 
+  def display_wrong_inputs_message(range)
+    puts
+    puts "Wrong input! Input should be any Integer number from
+        #{range.to_a[0]} to #{range.to_a[range.to_a.length - 1]}"
+    puts
+  end
+
+  def display_gameover(won, player)
+    if won
+      i = "\u{1F38A}" # Emoji Icon
+      n = player['name'] # Player Name
+      puts '********************************************************'
+      puts '*                                                      *'
+      puts "*             #{i} Congratulations #{i}                *"
+      puts "*                 #{n}  You Won!                       *"
+      puts '*                                                      *'
+      puts '********************************************************'
+    else
+      puts
+      puts '*********************************************************'
+      puts '*                                                       *'
+      puts '* You both tried, would you like to play another round? *'
+      puts '*                (yes) Continue                         *'
+      puts '*                (No)  Exit                             *'
+      puts '*                                                       *'
+      puts '*********************************************************'
+    end
+  end
+
   def correct_move(value)
     return false unless value.class == Integer
     return false unless (1..9).to_a.include?(value)
@@ -69,7 +98,7 @@ class Main
 
   def play
     until @gameover
-      print "#{@player.getplayers[@current_player]['name']}Please Enter the number :  "
+      print "#{@player.getplayers[@current_player]['name']}, Please Enter the number :  "
       move_value = gets.chomp
       if correct_move(move_value.to_i)
         display_board
@@ -77,7 +106,7 @@ class Main
         @number_of_moves += 1
         @gameover = true if @number_of_moves > 9
       else
-        puts 'Wrong input'
+        display_wrong_inputs_message((1..9))
       end
     end
   end
@@ -99,7 +128,7 @@ class Main
       when '2'
         exit
       else
-        puts 'Wrong choice!'
+        display_wrong_inputs_message((1..2))
         try_again = true
       end
     end

@@ -29,7 +29,7 @@ class Main
     until @player.getplayers.length == 2
       num = 'first'
       num = 'second' if i == 2
-      print "Please Enter the name of the #{num} player:"
+      print "Please Enter the name of the #{num} player:  "
       input = gets.chomp
       @player.add_player({ 'name' => input })
       i += 1
@@ -46,33 +46,63 @@ class Main
     puts
   end
 
+  def display_welcome_message
+    puts
+    puts '********************************************************'
+    puts '*                                                      *'
+    puts '*            Welcome to Tic Tac Toe                    *'
+    puts '*                                                      *'
+    puts '********************************************************'
+    puts '*                                                      *'
+    puts '*            (1) Start                                 *'
+    puts '*            (2) Exit                                  *'
+    puts '*                                                      *'
+    puts '********************************************************'
+  end
+
   def correct_move(value)
-    return false unless value.class == Interger
+    return false unless value.class == Integer
     return false unless (1..9).to_a.include?(value)
-     true
+
+    true
   end
-  
+
   def play
-     until @gameover 
-      puts @number_of_moves
-      print "#{@player.getplayers[@current_player]['name']} Enter the number : "
-      move = gets.chomp 
-      if correct_move()
-         
-      display_board
-      @current_player = @current_player.zero? ? 1 : 0
-      @number_of_moves += 1
-      @gameover = true if @number_of_moves > 9
+    until @gameover
+      print "#{@player.getplayers[@current_player]['name']}Please Enter the number :  "
+      move_value = gets.chomp
+      if correct_move(move_value.to_i)
+        display_board
+        @current_player = @current_player.zero? ? 1 : 0
+        @number_of_moves += 1
+        @gameover = true if @number_of_moves > 9
       else
-        puts "wrong input" 
+        puts 'Wrong input'
       end
-     end  
+    end
   end
+
   def start
-    # Get User Information
-    user_information
-    display_board
-    play
+    display_welcome_message
+    try_again = true
+    while try_again
+      try_again = false
+      print 'Please Enter the Number to continue:  '
+      case gets.chomp
+      when '1'
+        # Get User Information
+        user_information
+        # Display board
+        display_board
+        # Start playing
+        play
+      when '2'
+        exit
+      else
+        puts 'Wrong choice!'
+        try_again = true
+      end
+    end
   end
 end
 
